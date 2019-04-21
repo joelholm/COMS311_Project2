@@ -10,16 +10,14 @@ public class CommunicationsMonitor {
 		//TODO:
 		createGraphCalled = false;
 		triples = new ArrayList<CommunicationTriple>();
+		graph = new HashMap<Integer,ArrayList<ComputerNode>>();
 	}
 	
 	public void addCommunication(int c1, int c2, int timestamp) {
-		//TODO: error checking...
-		
 		//check that createGraph wasn't called
 		if( createGraphCalled ) {
 			return;
 		}
-		
 		//add to an array list
 		triples.add(new CommunicationTriple(c1,c2,timestamp));
 	}
