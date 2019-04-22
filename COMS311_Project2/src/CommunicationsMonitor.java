@@ -59,5 +59,40 @@ public class CommunicationsMonitor {
 		//sort the array list 
 		//probably need to write a quicksort/mergesort or something
 		//just need it to be done in O(nlogn)
+		mergeSort(triples);
 	}
+	
+	public List<CommunicationTriple> merge(final List<CommunicationTriple> left, final List<CommunicationTriple> right) {
+        final List<CommunicationTriple> merged = new ArrayList<>();
+        while (!left.isEmpty() && !right.isEmpty()) {
+        	if (left.get(0).getTimestamp() <= (right.get(0)).getTimestamp()) {
+                merged.add(left.remove(0));
+            } else {
+                merged.add(right.remove(0));
+            }
+        }
+        merged.addAll(left);
+        merged.addAll(right);
+        return merged;
+    }
+
+    public void mergeSort(final List<CommunicationTriple> input) {
+        if (input.size() != 1) {
+            final List<CommunicationTriple> left = new ArrayList<CommunicationTriple>();
+            final List<CommunicationTriple> right = new ArrayList<CommunicationTriple>();
+            boolean logicalSwitch = true;
+            while (!input.isEmpty()) {
+                if (logicalSwitch) {
+                    left.add(input.remove(0));
+                } else {
+                    right.add(input.remove(0));
+                }
+                logicalSwitch = !logicalSwitch;
+            }
+            mergeSort(left);
+            mergeSort(right);
+            input.addAll(merge(left, right));
+        }
+    }
+	
 }
