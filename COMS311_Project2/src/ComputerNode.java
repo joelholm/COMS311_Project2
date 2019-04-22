@@ -30,4 +30,14 @@ public class ComputerNode {
 		}
 		outNeighbors.add(n);
 	}
+	
+	@Override
+	public String toString() {
+		Iterator<ComputerNode> it = outNeighbors.iterator();
+		String neighbors = "";
+		while( it.hasNext() ) {
+			neighbors += "ID: " + it.next().getID();
+		}
+		return new String("id: " + id + " timestamp: " + timestamp + " \n\tNeighbors: ");
+	}
 }

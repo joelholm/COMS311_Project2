@@ -4,6 +4,9 @@
  * 
  * @author Joel Holm, Colin Ishman
  */
+
+import java.lang.*;
+
 public class CommunicationTriple {
 
 	private int c1,c2;
@@ -25,5 +28,10 @@ public class CommunicationTriple {
 	
 	public int getC2() {
 		return c2;
+	}
+	
+	@Override
+	public String toString() {
+		return new String("c1: " + c1 + " c2: " + c2 + " timestamp: " + timestamp);
 	}
 }
