@@ -25,6 +25,7 @@ class CommunicationsMonitorTest {
 		assertEquals(15, trip.get(3).getTimestamp());
 	}
 	
+	@Test
 	void addCommunicationTest() {
 		
 		CommunicationsMonitor comMon = new CommunicationsMonitor();
@@ -32,13 +33,13 @@ class CommunicationsMonitorTest {
 			comMon.addCommunication(i + 1, i + 6, i + 1);
 		}
 		comMon.addCommunication(-1, -100, -100);
-		/*
+		
 		if( true ) {
 			for( int i = 0; i <= 10; i++ ) {
 				System.out.println(comMon.triples.get(i).toString());
 			}
 		}
-		*/
+		assertEquals(comMon.triples.get(10).getC1(),-1);
 	}
 	
 	@Test
@@ -51,20 +52,83 @@ class CommunicationsMonitorTest {
 		
 		comMon.createGraph();
 		
-		for(int i = 0; i < 4; i++ ) {
-			ArrayList<ComputerNode> list = comMon.graph.get(i);
+		/*for(int i = 1; i <= 4; i++ ) {
+			ArrayList<ComputerNode> list = (ArrayList<ComputerNode>)comMon.graph.get(i);
 			Iterator<ComputerNode> it = list.iterator();
 			while( it.hasNext() ) {
 				System.out.println(it.next().toString());
 			}
+		}*/
+		
+		assertEquals(4, comMon.graph.get(1).get(0).getTimestamp());
+		assertEquals(12, comMon.graph.get(1).get(1).getTimestamp());
+		assertEquals(4, comMon.graph.get(2).get(0).getTimestamp());
+		assertEquals(8, comMon.graph.get(2).get(1).getTimestamp());
+		assertEquals(8, comMon.graph.get(3).get(0).getTimestamp());
+		assertEquals(8, comMon.graph.get(4).get(0).getTimestamp());
+		assertEquals(12, comMon.graph.get(4).get(1).getTimestamp());
+		
+		CommunicationsMonitor comMon2 = new CommunicationsMonitor();
+		comMon2.addCommunication(1,3,6);
+		comMon2.addCommunication(2,3,7);
+		comMon2.addCommunication(4,1,4);
+		comMon2.addCommunication(3,2,12);
+		comMon2.addCommunication(1,3,7);
+		comMon2.addCommunication(4,3,10);
+		
+		comMon2.createGraph();
+		
+		assertEquals(4,  comMon2.graph.get(1).get(0).getTimestamp());
+		assertEquals(6,  comMon2.graph.get(1).get(1).getTimestamp());
+		assertEquals(7,  comMon2.graph.get(1).get(2).getTimestamp());
+		assertEquals(7,  comMon2.graph.get(2).get(0).getTimestamp());
+		assertEquals(12, comMon2.graph.get(2).get(1).getTimestamp());
+		assertEquals(6,  comMon2.graph.get(3).get(0).getTimestamp());
+		assertEquals(7,  comMon2.graph.get(3).get(1).getTimestamp());
+		assertEquals(10, comMon2.graph.get(3).get(2).getTimestamp());
+		assertEquals(12, comMon2.graph.get(3).get(3).getTimestamp());
+		assertEquals(4,  comMon2.graph.get(4).get(0).getTimestamp());
+		assertEquals(10, comMon2.graph.get(4).get(1).getTimestamp());
+		
+	}
+	
+	//tests BFS
+	@Test
+	void testQueryInfection() {
+		CommunicationsMonitor comMon = new CommunicationsMonitor();
+		comMon.addCommunication(1,3,6);
+		comMon.addCommunication(2,3,7);
+		comMon.addCommunication(4,1,4);
+		comMon.addCommunication(3,2,12);
+		comMon.addCommunication(1,3,7);
+		comMon.addCommunication(4,3,10);
+		
+		comMon.createGraph();
+		
+		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
+		int[] nodeIDs = {3,4,2,2,1};
+		for( int i = 0; i < 5; i++ ) {
+			//...
 		}
+		 
+	}
+	
+	@Test
+	void testBothgetComputerMapping() {
+		CommunicationsMonitor comMon = new CommunicationsMonitor();
+		comMon.addCommunication(1,2,4);
+		comMon.addCommunication(2,4,8);
+		comMon.addCommunication(3,4,8);
+		comMon.addCommunication(1,4,12);
 		
-		assertEquals(comMon.graph.get(1).get(1).getTimestamp(), 4);
-		assertEquals(comMon.graph.get(1).get(2).getTimestamp(), 12);
-		assertEquals(comMon.graph.get(2).get(1).getTimestamp(), 4);
-		assertEquals(comMon.graph.get(1).get(2).getTimestamp(), 8);
-		//...
+		comMon.createGraph();
 		
+		HashMap<Integer,List<ComputerNode>> hash = comMon.getComputerMapping();
+		List<ComputerNode> list = comMon.getComputerMapping(1);
+		assertEquals( 12 , list.get(1).getTimestamp() );
+		list = comMon.getComputerMapping(-1);
+		assertEquals( true , list == null );
+		assertEquals(8, hash.get(3).get(0).getTimestamp());
 	}
 
 }

@@ -4,6 +4,7 @@ public class ComputerNode {
 	
 	private int timestamp;
 	private int id;
+	ComputerNode pred;
 	private List<ComputerNode> outNeighbors;
 	
 	public ComputerNode(int id, int timestamp) {
@@ -36,8 +37,9 @@ public class ComputerNode {
 		Iterator<ComputerNode> it = outNeighbors.iterator();
 		String neighbors = "";
 		while( it.hasNext() ) {
-			neighbors += "ID: " + it.next().getID();
+			ComputerNode next = it.next();
+			neighbors += "ID: " + next.getID() + " Timestamp: " + next.getTimestamp() + "\t";
 		}
-		return new String("id: " + id + " timestamp: " + timestamp + " \n\tNeighbors: ");
+		return new String("id: " + id + " timestamp: " + timestamp + " \n\tNeighbors: " + neighbors);
 	}
 }

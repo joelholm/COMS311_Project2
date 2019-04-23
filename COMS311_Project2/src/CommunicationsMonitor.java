@@ -2,15 +2,15 @@ import java.util.*;
 
 public class CommunicationsMonitor {
 	
-	boolean createGraphCalled;
+	private boolean createGraphCalled;
 	ArrayList<CommunicationTriple> triples;
-	HashMap<Integer,ArrayList<ComputerNode>> graph;
+	HashMap<Integer,List<ComputerNode>> graph;
 	
 	public CommunicationsMonitor() {
 		//TODO:
 		createGraphCalled = false;
 		triples = new ArrayList<CommunicationTriple>();
-		graph = new HashMap<Integer,ArrayList<ComputerNode>>();
+		graph = new HashMap<Integer,List<ComputerNode>>();
 	}
 	
 	public void addCommunication(int c1, int c2, int timestamp) {
@@ -23,9 +23,13 @@ public class CommunicationsMonitor {
 	}
 	
 	public void createGraph() {
+		if( createGraphCalled ) {
+			//no need to call it again															//Right?
+			return;
+		}
 		createGraphCalled = true;
 		
-		sortTriples();
+		mergeSort(triples); //O(nlogn)
 		
 		//for each triple ( now ordered )
 		Iterator<CommunicationTriple> ait = triples.iterator();
@@ -53,7 +57,7 @@ public class CommunicationsMonitor {
 	//runs in constant time, O(1)
 	public ComputerNode addNodeToGraph(ComputerNode cn) {
 		
-		ArrayList<ComputerNode> listc = graph.get(cn.getID());
+		ArrayList<ComputerNode> listc = (ArrayList<ComputerNode>)graph.get(cn.getID());
 		//if the list doesn't exist create it in O(1)
 		if( listc == null ) {
 			ArrayList<ComputerNode> newList = new ArrayList<ComputerNode>();
@@ -82,16 +86,41 @@ public class CommunicationsMonitor {
 	}
 	
 	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y){
-		//TODO:
 		//find first node that works with c1
+		ArrayList<ComputerNode> cnList = (ArrayList<ComputerNode>)graph.get(c1);
+		ComputerNode firstRef = null;
+		Iterator<ComputerNode> it = cnList.iterator();
+		while( it.hasNext() ) {
+			ComputerNode next = it.next();
+			if( next.getTimestamp() >= x ) {
+				firstRef = next;
+				break;
+			}
+		}
+		if( firstRef == null ) {
+			//if null then there exists no timestamp of C >= x, so return null
+			return null;
+		}
 		
 		//run BFS from that node
+		ComputerNode foundNode = runBFS(c2, y,firstRef);
+		if( foundNode == null ) {
+			//if null, no node was found
+			return null;
+		}
 		
+		//get the backtrack path
+		ComputerNode curr = foundNode;
+		ArrayList<ComputerNode> path = new ArrayList<ComputerNode>();
+		while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
+			path.add(curr);
+			curr = curr.pred;
+		}
 		
-		return null;
+		return path;
 	}
 	
-	public ComputerNode runBFS(int c2, int y) {
+	public ComputerNode runBFS(int c2, int y, ComputerNode cn) {
 		
 		//run standard BFS but include an if statement, checking if each node is
 		//from c2 with a timestamp <= y
@@ -102,25 +131,14 @@ public class CommunicationsMonitor {
 	}
 	
 	
-	//use figure 1 for reference ( those box things )
+	
 	public HashMap<Integer, List<ComputerNode>> getComputerMapping(){
-		//TODO:
-		
-		return null;
+		return graph;
 	}
 	
-	//just like ^^^ this function, but only get one List based on int c
+	
 	public List<ComputerNode> getComputerMapping(int c){
-		//TODO:
-		return null;
-	}
-	
-	public void sortTriples() {
-		//TODO: 
-		//sort the array list 
-		//probably need to write a quicksort/mergesort or something
-		//just need it to be done in O(nlogn)
-		mergeSort(triples);
+		return graph.get(c);
 	}
 	
 	public List<CommunicationTriple> merge(final List<CommunicationTriple> left, final List<CommunicationTriple> right) {
