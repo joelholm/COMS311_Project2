@@ -83,8 +83,24 @@ public class CommunicationsMonitor {
 	
 	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y){
 		//TODO:
+		//find first node that works with c1
+		
+		//run BFS from that node
+		
+		
 		return null;
 	}
+	
+	public ComputerNode runBFS(int c2, int y) {
+		
+		//run standard BFS but include an if statement, checking if each node is
+		//from c2 with a timestamp <= y
+		
+		
+		//if the BFS has run fully return null
+		return null;
+	}
+	
 	
 	//use figure 1 for reference ( those box things )
 	public HashMap<Integer, List<ComputerNode>> getComputerMapping(){
