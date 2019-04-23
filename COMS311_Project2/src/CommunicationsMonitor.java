@@ -124,8 +124,35 @@ public class CommunicationsMonitor {
 		
 		//run standard BFS but include an if statement, checking if each node is
 		//from c2 with a timestamp <= y
+		//Start with cn and run BFS on that
+		cn.setDist(0);
+		Queue<ComputerNode> queue = new LinkedList<>();
+		ArrayList<ComputerNode> visited = new ArrayList<>();
+		 
+		queue.add(cn);
+		ComputerNode prev = cn;
 		
-		
+		//While queue is not empty
+		while(!queue.isEmpty()) {
+			ComputerNode current = queue.remove();
+			//sets the current pred to prev, if not the starter node
+			if(!current.equals(cn))
+				current.setPred(prev);
+			//If the current node is the goal node
+			if(current.getID() == c2 && current.getTimestamp() <= y)
+				return current;
+			//Current node is not the goal
+			else {
+				//Checks if there is anymore neighbors
+				if(current.getOutNeighbors().size() == 0)
+					continue;
+				//Add all the neighbors to the queue and set all of there pred to current
+				else
+					queue.addAll(current.getOutNeighbors());
+			}
+			visited.add(current);
+			prev = current;
+		}		
 		//if the BFS has run fully return null
 		return null;
 	}
