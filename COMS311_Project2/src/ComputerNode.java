@@ -4,9 +4,8 @@ public class ComputerNode {
 	
 	private int timestamp;
 	private int id;
-	ComputerNode pred;
 	private int dist;
-	private ComputerNode pred;
+	public ComputerNode pred;
 	private List<ComputerNode> outNeighbors;
 	
 	public ComputerNode(int id, int timestamp) {

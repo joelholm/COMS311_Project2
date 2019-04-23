@@ -105,12 +105,29 @@ class CommunicationsMonitorTest {
 		
 		comMon.createGraph();
 		
-		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
+		//List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
 		int[] nodeIDs = {3,4,2,2,1};
-		for( int i = 0; i < 5; i++ ) {
+		/*for( int i = 0; i < 5; i++ ) {
 			//...
-		}
-		 
+		}*/
+		//for(int i = 0; i < list1.size(); i++) {
+		//	System.out.print("ID: " + list1.get(i).getID() + "   Time: " + list1.get(i).getTimestamp() + "\n");
+		//}
+		
+		CommunicationsMonitor comMon2 = new CommunicationsMonitor();
+		comMon2.addCommunication(1,2,4);
+		comMon2.addCommunication(2,4,8);
+		comMon2.addCommunication(3,4,8);
+		comMon2.addCommunication(1,4,12);
+		
+		comMon2.createGraph();
+		List<ComputerNode> list2 = comMon2.queryInfection(1, 2, 1, 2);
+		
+		if(list2 == null)
+			assertEquals(true, true);
+		if(list2 != null)
+			for(int i = 0; i < list2.size(); i++) 
+				System.out.print("ID: " + list2.get(i).getID() + "   Time: " + list2.get(i).getTimestamp() + "\n");
 	}
 	
 	@Test

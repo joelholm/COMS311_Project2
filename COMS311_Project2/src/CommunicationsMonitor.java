@@ -112,10 +112,17 @@ public class CommunicationsMonitor {
 		//get the backtrack path
 		ComputerNode curr = foundNode;
 		ArrayList<ComputerNode> path = new ArrayList<ComputerNode>();
-		while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
+		
+		while(curr.pred != null) {
 			path.add(curr);
 			curr = curr.pred;
 		}
+		path.add(firstRef);
+		
+		/*while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
+			path.add(curr);
+			curr = curr.pred;
+		}*/
 		
 		return path;
 	}
@@ -125,35 +132,37 @@ public class CommunicationsMonitor {
 		//run standard BFS but include an if statement, checking if each node is
 		//from c2 with a timestamp <= y
 		//Start with cn and run BFS on that
-		cn.setDist(0);
-		Queue<ComputerNode> queue = new LinkedList<>();
-		ArrayList<ComputerNode> visited = new ArrayList<>();
-		 
-		queue.add(cn);
-		ComputerNode prev = cn;
 		
-		//While queue is not empty
-		while(!queue.isEmpty()) {
-			ComputerNode current = queue.remove();
-			//sets the current pred to prev, if not the starter node
-			if(!current.equals(cn))
-				current.setPred(prev);
-			//If the current node is the goal node
-			if(current.getID() == c2 && current.getTimestamp() <= y)
-				return current;
-			//Current node is not the goal
-			else {
-				//Checks if there is anymore neighbors
-				if(current.getOutNeighbors().size() == 0)
-					continue;
-				//Add all the neighbors to the queue and set all of there pred to current
-				else
-					queue.addAll(current.getOutNeighbors());
+		//List for current layer nodes and list of nodes visited
+		Queue<ComputerNode> currQ = new LinkedList<>();
+		ArrayList<ComputerNode> visited = new ArrayList<>();
+		
+		currQ.add(cn);
+		
+		//While the layer of node is not empty
+		while(!currQ.isEmpty()) {
+			//List of nodes for the next layer
+			Queue<ComputerNode> nextQ = new LinkedList<>();
+			//Goes through the current layer of nodes
+			for(int i = 0; i < currQ.size(); i++) {
+				ComputerNode current = currQ.remove();
+				List<ComputerNode> neigh = current.getOutNeighbors();
+				//Goes through all the neoghbors of the current node 
+				for(int j = 0; j < current.getOutNeighbors().size(); j++) {
+					//Checks if the node has already been visited
+					if(!visited.contains(neigh.get(j))) {
+						neigh.get(j).pred = current;
+						nextQ.add(neigh.get(j));
+					}
+					//If this is the node we want
+					if(neigh.get(j).getID() == c2 && neigh.get(j).getTimestamp() <= y)
+						return neigh.get(j);
+				}
+				visited.add(current);
 			}
-			visited.add(current);
-			prev = current;
-		}		
-		//if the BFS has run fully return null
+			currQ = nextQ;
+		}
+		//If we don't find the node 
 		return null;
 	}
 	
