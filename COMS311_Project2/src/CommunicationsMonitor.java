@@ -86,8 +86,16 @@ public class CommunicationsMonitor {
 	}
 	
 	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y){
+		//if  x < y, return null right away
+		if( x > y ) {
+			return null;
+		}
 		//find first node that works with c1
 		ArrayList<ComputerNode> cnList = (ArrayList<ComputerNode>)graph.get(c1);
+		if( cnList == null ) {
+			//if illegal input for c1
+			return null;
+		}
 		ComputerNode firstRef = null;
 		Iterator<ComputerNode> it = cnList.iterator();
 		while( it.hasNext() ) {
@@ -119,10 +127,15 @@ public class CommunicationsMonitor {
 		}
 		path.add(firstRef);
 		
-		/*while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
+		while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
 			path.add(curr);
+			if( curr.pred == null ) {																			//check that can be removed?
+				System.out.println("Bad Output");
+				return null;
+			}
 			curr = curr.pred;
-		}*/
+		}
+		path.add(curr);
 		
 		return path;
 	}
@@ -146,6 +159,7 @@ public class CommunicationsMonitor {
 		//List for current layer nodes and list of nodes visited
 		Queue<ComputerNode> currQ = new LinkedList<>();
 		//ArrayList<ComputerNode> visited = new ArrayList<>();
+		
 		
 		currQ.add(cn);
 		cn.color = 1; cn.dist = 0;

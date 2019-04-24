@@ -34,7 +34,7 @@ class CommunicationsMonitorTest {
 		}
 		comMon.addCommunication(-1, -100, -100);
 		
-		if( true ) {
+		if( false ) {
 			for( int i = 0; i <= 10; i++ ) {
 				System.out.println(comMon.triples.get(i).toString());
 			}
@@ -128,14 +128,18 @@ class CommunicationsMonitorTest {
 		
 		comMon.createGraph();
 		
-		//List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
-		int[] nodeIDs = {3,4,2,2,1};
-		/*for( int i = 0; i < 5; i++ ) {
-			//...
-		}*/
-		//for(int i = 0; i < list1.size(); i++) {
-		//	System.out.print("ID: " + list1.get(i).getID() + "   Time: " + list1.get(i).getTimestamp() + "\n");
-		//}
+		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
+		assertEquals(true, list1 != null);
+		
+		list1 = comMon.queryInfection(1, 2, 8, 12);
+		assertEquals(true, list1 == null);
+		
+		list1 = comMon.queryInfection(4, 2, 3, 6);
+		assertEquals(true, list1 == null);
+		
+		list1 = comMon.queryInfection(4, 2, 0, 12);
+		assertEquals(true, list1 != null);
+		
 		
 		CommunicationsMonitor comMon2 = new CommunicationsMonitor();
 		comMon2.addCommunication(1,2,4);
@@ -145,8 +149,13 @@ class CommunicationsMonitorTest {
 		
 		comMon2.createGraph();
 		List<ComputerNode> list2 = comMon2.queryInfection(1, 4, 4, 10);
+
 		
-		
+		List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
+		List<ComputerNode> list4 = comMon2.queryInfection(4, 3, 9, 12);
+		assertEquals(true, list2 != null);
+		assertEquals(true, list3 != null);
+		assertEquals(true, list4 == null);
 		
 		
 		if(list2 != null)
@@ -154,7 +163,7 @@ class CommunicationsMonitorTest {
 				System.out.print("ID: " + list2.get(i).getID() + "   Time: " + list2.get(i).getTimestamp() + "\n");
 		System.out.print("\n");
 		
-		List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
+	/*	List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
 		if(list3 != null)
 			for(int i = 0; i < list3.size(); i++) 
 				System.out.print("ID: " + list3.get(i).getID() + "   Time: " + list3.get(i).getTimestamp() + "\n");
@@ -163,6 +172,7 @@ class CommunicationsMonitorTest {
 		if(list4 != null)
 			for(int i = 0; i < list4.size(); i++) 
 				System.out.print("ID: " + list4.get(i).getID() + "   Time: " + list4.get(i).getTimestamp() + "\n");
+	*/
 	
 	}
 	
