@@ -140,12 +140,15 @@ public class CommunicationsMonitor {
 		return path;
 	}
 	
+	/**
+	 * Searches for a node that is the same ID as c2 and has a time stamp that
+	 * is less than or equal to y. Uses BFS to find the node.
+	 * 
+	 * @param c2 The ID of the node we are looking for
+	 * @param y The time that the node should be infected
+	 * @param cn The starter node to search from
+	 */
 	public ComputerNode runBFS(int c2, int y, ComputerNode cn) {
-		
-		//run standard BFS but include an if statement, checking if each node is
-		//from c2 with a timestamp <= y
-		//Start with cn and run BFS on that
-		
 		//reset everything
 		Iterator<Integer> it = graph.keySet().iterator();
 		while( it.hasNext() ) {
@@ -177,46 +180,14 @@ public class CommunicationsMonitor {
 					c.pred = current;
 					currQ.add(c);
 				}
+				//Check if this is the node we want
 				if(c.getID() == c2 && c.getTimestamp() <= y)
 					return c;
 			}
+			//Remove node from queue and color it finished
 			currQ.remove();
 			current.color = 2;
 		}
-			
-			
-			
-			
-			/*
-			
-			//List of nodes for the next layer
-			Queue<ComputerNode> nextQ = new LinkedList<>();
-			
-			//Goes through the current layer of nodes
-			for(int i = 0; i < currQ.size(); i++) {
-				ComputerNode current = currQ.remove();
-				List<ComputerNode> neigh = current.getOutNeighbors();
-				
-				//Goes through all the neighbors of the current node 
-				for(int j = 0; j < current.getOutNeighbors().size(); j++) {
-					
-					//Checks if the node has already been visited
-					if(!visited.contains(neigh.get(j))) {
-						neigh.get(j).pred = current;
-						nextQ.add(neigh.get(j));
-					}
-					
-					//If this is the node we want
-					if(neigh.get(j).getID() == c2 && neigh.get(j).getTimestamp() <= y)
-						return neigh.get(j);
-				}
-				visited.add(current);
-			}
-			currQ = nextQ;
-		}
-		//If we don't find the node 
-		 * 
-		 */
 		return null;
 	}
 	
