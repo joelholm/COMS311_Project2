@@ -1,10 +1,17 @@
+/**
+ * ComputerNode 
+ * This class represents the nodes created after createGraph is called in CommunicationsMonitor.
+ * It contains instance varibales used to runs the BFS such as pred 
+ * 
+ * @author Joel Holm, Colin Ishman
+ */
+
 import java.util.*;
 
 public class ComputerNode {
 	
 	private int timestamp;
 	private int id;
-	public int dist;
 	public ComputerNode pred;
 	public int color; //0 = white, 1 = gray, 2 = black
 	private List<ComputerNode> outNeighbors;
@@ -13,17 +20,12 @@ public class ComputerNode {
 		outNeighbors = new ArrayList<ComputerNode>();
 		this.timestamp = timestamp;
 		this.id = id;
-		dist = 999;
 		pred = null;
 		color = 0;
 	}
 	
 	public int getID() {
 		return id;
-	}
-	
-	public int getDist() {
-		return dist;
 	}
 	
 	public ComputerNode getPred() {

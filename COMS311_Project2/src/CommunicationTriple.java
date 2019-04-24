@@ -5,7 +5,7 @@
  * @author Joel Holm, Colin Ishman
  */
 
-import java.lang.*;
+import java.lang.String;
 
 public class CommunicationTriple {
 

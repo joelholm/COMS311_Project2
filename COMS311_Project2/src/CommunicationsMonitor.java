@@ -7,7 +7,6 @@ public class CommunicationsMonitor {
 	HashMap<Integer,List<ComputerNode>> graph;
 	
 	public CommunicationsMonitor() {
-		//TODO:
 		createGraphCalled = false;
 		triples = new ArrayList<CommunicationTriple>();
 		graph = new HashMap<Integer,List<ComputerNode>>();
@@ -24,7 +23,6 @@ public class CommunicationsMonitor {
 	
 	public void createGraph() {
 		if( createGraphCalled ) {
-			//no need to call it again															//Right?
 			return;
 		}
 		createGraphCalled = true;
@@ -120,22 +118,16 @@ public class CommunicationsMonitor {
 		//get the backtrack path
 		ComputerNode curr = foundNode;
 		ArrayList<ComputerNode> path = new ArrayList<ComputerNode>();
-		
-		while(curr.pred != null) {
-			path.add(curr);
-			curr = curr.pred;
-		}
-		path.add(firstRef);
-		
+		Stack<ComputerNode> stack = new Stack<ComputerNode>();
 		while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
-			path.add(curr);
-			if( curr.pred == null ) {																			//check that can be removed?
-				System.out.println("Bad Output");
-				return null;
-			}
-			curr = curr.pred;
+			stack.add(curr);
+			curr = curr.getPred();
 		}
-		path.add(curr);
+		stack.add(curr);
+		stack.add(firstRef);
+		while( !stack.isEmpty() ) {
+			path.add(stack.pop());
+		}
 		
 		return path;
 	}
@@ -165,7 +157,7 @@ public class CommunicationsMonitor {
 		
 		
 		currQ.add(cn);
-		cn.color = 1; cn.dist = 0;
+		cn.color = 1;
 		//While the layer of node is not empty
 		while(!currQ.isEmpty()) {
 			
@@ -176,7 +168,6 @@ public class CommunicationsMonitor {
 				ComputerNode c = neigh.get(i);
 				if(c.color == 0) {
 					c.color = 1;
-					c.dist = current.dist + 1;
 					c.pred = current;
 					currQ.add(c);
 				}
