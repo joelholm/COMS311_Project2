@@ -117,6 +117,14 @@ class CommunicationsMonitorTest {
 		list1 = comMon.queryInfection(4, 2, 0, 12);
 		assertEquals(true, list1 != null);
 		
+		System.out.println("Size: " + list1.size());
+		Iterator<ComputerNode> it = list1.iterator();
+		ComputerNode curr;
+		while( it.hasNext() ) {
+			curr = it.next();
+			System.out.println(curr.toString());
+		}
+		
 		
 		CommunicationsMonitor comMon2 = new CommunicationsMonitor();
 		comMon2.addCommunication(1,2,4);
