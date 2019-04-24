@@ -119,10 +119,15 @@ public class CommunicationsMonitor {
 		}
 		path.add(firstRef);
 		
-		/*while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
+		while( curr.getID() != firstRef.getID() && curr.getTimestamp() != firstRef.getTimestamp() ) {
 			path.add(curr);
+			if( curr.pred == null ) {																			//check that can be removed?
+				System.out.println("Bad Output");
+				return null;
+			}
 			curr = curr.pred;
-		}*/
+		}
+		path.add(curr);
 		
 		return path;
 	}

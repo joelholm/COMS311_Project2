@@ -34,7 +34,7 @@ class CommunicationsMonitorTest {
 		}
 		comMon.addCommunication(-1, -100, -100);
 		
-		if( true ) {
+		if( false ) {
 			for( int i = 0; i <= 10; i++ ) {
 				System.out.println(comMon.triples.get(i).toString());
 			}
@@ -105,11 +105,16 @@ class CommunicationsMonitorTest {
 		
 		comMon.createGraph();
 		
-		//List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
-		int[] nodeIDs = {3,4,2,2,1};
-		/*for( int i = 0; i < 5; i++ ) {
-			//...
-		}*/
+		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
+		
+		int i1 = list1.get(0).getID(), i2 = list1.get(1).getID();
+		int j1 = list1.get(0).getTimestamp(), j2 = list1.get(1).getTimestamp();
+		
+		assertEquals(true, 3 == i1 );
+		assertEquals(true, 3 == i2 || 3 == i2 || 1 == i2 );
+		
+		
+		
 		//for(int i = 0; i < list1.size(); i++) {
 		//	System.out.print("ID: " + list1.get(i).getID() + "   Time: " + list1.get(i).getTimestamp() + "\n");
 		//}
