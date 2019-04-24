@@ -105,32 +105,16 @@ class CommunicationsMonitorTest {
 		
 		comMon.createGraph();
 		
-//		for(int i = 1; i <= 4; i++ ) {
-//			ArrayList<ComputerNode> list = (ArrayList<ComputerNode>)comMon.graph.get(i);
-//			Iterator<ComputerNode> it = list.iterator();
-//			while( it.hasNext() ) {
-//				System.out.println(it.next().toString());
-//			}
-//		}
-//		Iterator<ComputerNode> it = list1.iterator();
-//		ComputerNode curr = it.next();
-//		System.out.println("List Nodes");
-//		for( ; it.hasNext(); curr = it.next()) {
-//			System.out.println("N1: " + curr.toString());
-//		}
-		
-//		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
-//		
-		/*
+		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
 		assertEquals(true, list1 != null);
 		
 		list1 = comMon.queryInfection(1, 2, 8, 12);
 		assertEquals(true, list1 == null);
 		
 		list1 = comMon.queryInfection(4, 2, 3, 6);
-		assertEquals(true, list1 == null);*/
+		assertEquals(true, list1 == null);
 		
-		List<ComputerNode> list1 = comMon.queryInfection(4, 2, 0, 12);
+		list1 = comMon.queryInfection(4, 2, 0, 12);
 		assertEquals(true, list1 != null);
 		
 		
@@ -142,8 +126,11 @@ class CommunicationsMonitorTest {
 		
 		comMon2.createGraph();
 		List<ComputerNode> list2 = comMon2.queryInfection(1, 4, 4, 10);
-		//List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
-		//List<ComputerNode> list4 = comMon2.queryInfection(4, 3, 1, 15);
+		List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
+		List<ComputerNode> list4 = comMon2.queryInfection(4, 3, 9, 12);
+		assertEquals(true, list2 != null);
+		assertEquals(true, list3 != null);
+		assertEquals(true, list4 == null);
 		
 		
 		if(list2 != null)
