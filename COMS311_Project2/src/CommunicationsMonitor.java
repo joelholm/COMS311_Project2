@@ -6,12 +6,22 @@ public class CommunicationsMonitor {
 	ArrayList<CommunicationTriple> triples;
 	HashMap<Integer,List<ComputerNode>> graph;
 	
+	/**
+	 * Constructor
+	 */
 	public CommunicationsMonitor() {
 		createGraphCalled = false;
 		triples = new ArrayList<CommunicationTriple>();
 		graph = new HashMap<Integer,List<ComputerNode>>();
 	}
 	
+	/**
+	 * This triple represents the fact that the computers with
+	 * IDs c1 and c2 have communicated at the given timestamp
+	 * @param c1 ID of first computer
+	 * @param c2 ID of second computer
+	 * @param timestamp time computers interact
+	 */
 	public void addCommunication(int c1, int c2, int timestamp) {
 		//check that createGraph wasn't called
 		if( createGraphCalled ) {
@@ -21,6 +31,9 @@ public class CommunicationsMonitor {
 		triples.add(new CommunicationTriple(c1,c2,timestamp));
 	}
 	
+	/**
+	 * Constructs the data structure
+	 */
 	public void createGraph() {
 		if( createGraphCalled ) {
 			return;
@@ -53,6 +66,12 @@ public class CommunicationsMonitor {
 	//it returns the same node you gave it
 	//adds an entry to the hash table if needed
 	//runs in constant time, O(1)
+	/**
+	 * returns a new node if the node already exists, otherwise
+	 * adds an entry to the hash table if needed
+	 * @param cn node to be added to graph
+	 * @return cn, the node that was given
+	 */
 	public ComputerNode addNodeToGraph(ComputerNode cn) {
 		
 		ArrayList<ComputerNode> listc = (ArrayList<ComputerNode>)graph.get(cn.getID());
@@ -83,6 +102,16 @@ public class CommunicationsMonitor {
 		return cn;
 	}
 	
+	
+	/**
+	 * Determines whether computer c2 could be infected by time y 
+	 * if computer c1 was infected at time x. 
+	 * @param c1 ID of computer 1
+	 * @param c2 ID of computer 2
+	 * @param x time computer 1 is infected
+	 * @param y time computer 2 should be infected by
+	 * @return List of nodes that connects computers 1 and 2 from the timestamps x and y
+	 */
 	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y){
 		//if  x < y, return null right away
 		if( x > y ) {
@@ -183,16 +212,29 @@ public class CommunicationsMonitor {
 	}
 	
 	
-	
+	/**
+	 * Returns the data structure
+	 * @return graph
+	 */
 	public HashMap<Integer, List<ComputerNode>> getComputerMapping(){
 		return graph;
 	}
 	
-	
+	/**
+	 * Returns the list from the hashmap at index c
+	 * @param c Index of a list in the hashmap
+	 * @return The list that corresponds with the index c
+	 */
 	public List<ComputerNode> getComputerMapping(int c){
 		return graph.get(c);
 	}
 	
+	/**
+	 * Merges the left and right lists in the correct order
+	 * @param left Left side of the list
+	 * @param right Right side of the list
+	 * @return a sorted list
+	 */
 	public List<CommunicationTriple> merge(final List<CommunicationTriple> left, final List<CommunicationTriple> right) {
         final List<CommunicationTriple> merged = new ArrayList<>();
         while (!left.isEmpty() && !right.isEmpty()) {
@@ -207,6 +249,10 @@ public class CommunicationsMonitor {
         return merged;
     }
 
+	/**
+	 * Sorts the list using merge sort
+	 * @param input a list to be sorted
+	 */
     public void mergeSort(final List<CommunicationTriple> input) {
         if (input.size() != 1) {
             final List<CommunicationTriple> left = new ArrayList<CommunicationTriple>();
