@@ -92,6 +92,29 @@ class CommunicationsMonitorTest {
 		
 	}
 	
+	@Test
+	void testQueryInfectionColor() {
+		CommunicationsMonitor comMon = new CommunicationsMonitor();
+		comMon.addCommunication(1,2,4);
+		comMon.addCommunication(2,4,8);
+		comMon.addCommunication(3,4,8);
+		comMon.addCommunication(1,4,12);
+		comMon.addCommunication(4,3,15);
+		comMon.addCommunication(2,4,16);
+		comMon.addCommunication(1,3,20);
+		
+		comMon.createGraph();
+		List<ComputerNode> list = comMon.queryInfection(2,3,8,12);
+		for(int i = 0; i < list.size(); i++) 
+			System.out.print("ID: " + list.get(i).getID() + "   Time: " + list.get(i).getTimestamp() + "\n");
+		list = comMon.queryInfection(2,4,8,12);
+		System.out.print("\n");
+		for(int i = 0; i < list.size(); i++) 
+			System.out.print("ID: " + list.get(i).getID() + "   Time: " + list.get(i).getTimestamp() + "\n");
+		
+	}
+	
+	
 	//tests BFS
 	@Test
 	void testQueryInfection() {
@@ -122,21 +145,24 @@ class CommunicationsMonitorTest {
 		
 		comMon2.createGraph();
 		List<ComputerNode> list2 = comMon2.queryInfection(1, 4, 4, 10);
-		//List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
-		//List<ComputerNode> list4 = comMon2.queryInfection(4, 3, 1, 15);
+		
+		
 		
 		
 		if(list2 != null)
 			for(int i = 0; i < list2.size(); i++) 
 				System.out.print("ID: " + list2.get(i).getID() + "   Time: " + list2.get(i).getTimestamp() + "\n");
 		System.out.print("\n");
-		/*if(list3 != null)
+		
+		List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
+		if(list3 != null)
 			for(int i = 0; i < list3.size(); i++) 
 				System.out.print("ID: " + list3.get(i).getID() + "   Time: " + list3.get(i).getTimestamp() + "\n");
-		System.out.print("\n");*/
-		//if(list4 != null)
-			//for(int i = 0; i < list4.size(); i++) 
-				//System.out.print("ID: " + list4.get(i).getID() + "   Time: " + list4.get(i).getTimestamp() + "\n");
+		
+		List<ComputerNode> list4 = comMon2.queryInfection(4, 3, 1, 15);
+		if(list4 != null)
+			for(int i = 0; i < list4.size(); i++) 
+				System.out.print("ID: " + list4.get(i).getID() + "   Time: " + list4.get(i).getTimestamp() + "\n");
 	
 	}
 	
