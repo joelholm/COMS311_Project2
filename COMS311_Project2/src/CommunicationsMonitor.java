@@ -135,25 +135,53 @@ public class CommunicationsMonitor {
 		
 		//List for current layer nodes and list of nodes visited
 		Queue<ComputerNode> currQ = new LinkedList<>();
-		ArrayList<ComputerNode> visited = new ArrayList<>();
+		//ArrayList<ComputerNode> visited = new ArrayList<>();
 		
 		currQ.add(cn);
-		
+		cn.color = 1; cn.dist = 0;
 		//While the layer of node is not empty
 		while(!currQ.isEmpty()) {
+			
+			ComputerNode current = currQ.peek();
+			//For each neighbor of current
+			List<ComputerNode> neigh = current.getOutNeighbors();
+			for(int i = 0; i < current.getOutNeighbors().size(); i++) {
+				ComputerNode c = neigh.get(i);
+				if(c.color == 0) {
+					c.color = 1;
+					c.dist = current.dist + 1;
+					c.pred = current;
+					currQ.add(c);
+				}
+				if(c.getID() == c2 && c.getTimestamp() <= y)
+					return c;
+			}
+			currQ.remove();
+			current.color = 2;
+		}
+			
+			
+			
+			
+			/*
+			
 			//List of nodes for the next layer
 			Queue<ComputerNode> nextQ = new LinkedList<>();
+			
 			//Goes through the current layer of nodes
 			for(int i = 0; i < currQ.size(); i++) {
 				ComputerNode current = currQ.remove();
 				List<ComputerNode> neigh = current.getOutNeighbors();
-				//Goes through all the neoghbors of the current node 
+				
+				//Goes through all the neighbors of the current node 
 				for(int j = 0; j < current.getOutNeighbors().size(); j++) {
+					
 					//Checks if the node has already been visited
 					if(!visited.contains(neigh.get(j))) {
 						neigh.get(j).pred = current;
 						nextQ.add(neigh.get(j));
 					}
+					
 					//If this is the node we want
 					if(neigh.get(j).getID() == c2 && neigh.get(j).getTimestamp() <= y)
 						return neigh.get(j);
@@ -163,6 +191,8 @@ public class CommunicationsMonitor {
 			currQ = nextQ;
 		}
 		//If we don't find the node 
+		 * 
+		 */
 		return null;
 	}
 	

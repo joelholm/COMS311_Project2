@@ -4,8 +4,9 @@ public class ComputerNode {
 	
 	private int timestamp;
 	private int id;
-	private int dist;
+	public int dist;
 	public ComputerNode pred;
+	public int color; //0 = white, 1 = gray, 2 = black
 	private List<ComputerNode> outNeighbors;
 	
 	public ComputerNode(int id, int timestamp) {
@@ -14,6 +15,7 @@ public class ComputerNode {
 		this.id = id;
 		dist = 999;
 		pred = null;
+		color = 0;
 	}
 	
 	public int getID() {
@@ -24,16 +26,8 @@ public class ComputerNode {
 		return dist;
 	}
 	
-	public void setDist(int d) {
-		dist = d;
-	}
-	
 	public ComputerNode getPred() {
 		return pred;
-	}
-	
-	public void setPred(ComputerNode ct) {
-		pred = ct;
 	}
 	
 	public int getTimestamp() {
