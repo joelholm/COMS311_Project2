@@ -105,19 +105,34 @@ class CommunicationsMonitorTest {
 		
 		comMon.createGraph();
 		
-		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
+//		for(int i = 1; i <= 4; i++ ) {
+//			ArrayList<ComputerNode> list = (ArrayList<ComputerNode>)comMon.graph.get(i);
+//			Iterator<ComputerNode> it = list.iterator();
+//			while( it.hasNext() ) {
+//				System.out.println(it.next().toString());
+//			}
+//		}
+//		Iterator<ComputerNode> it = list1.iterator();
+//		ComputerNode curr = it.next();
+//		System.out.println("List Nodes");
+//		for( ; it.hasNext(); curr = it.next()) {
+//			System.out.println("N1: " + curr.toString());
+//		}
 		
-		int i1 = list1.get(0).getID(), i2 = list1.get(1).getID();
-		int j1 = list1.get(0).getTimestamp(), j2 = list1.get(1).getTimestamp();
+//		List<ComputerNode> list1 = comMon.queryInfection(1, 3, 2, 8);
+//		
+		/*
+		assertEquals(true, list1 != null);
 		
-		assertEquals(true, 3 == i1 );
-		assertEquals(true, 3 == i2 || 3 == i2 || 1 == i2 );
+		list1 = comMon.queryInfection(1, 2, 8, 12);
+		assertEquals(true, list1 == null);
 		
+		list1 = comMon.queryInfection(4, 2, 3, 6);
+		assertEquals(true, list1 == null);*/
 		
+		List<ComputerNode> list1 = comMon.queryInfection(4, 2, 0, 12);
+		assertEquals(true, list1 != null);
 		
-		//for(int i = 0; i < list1.size(); i++) {
-		//	System.out.print("ID: " + list1.get(i).getID() + "   Time: " + list1.get(i).getTimestamp() + "\n");
-		//}
 		
 		CommunicationsMonitor comMon2 = new CommunicationsMonitor();
 		comMon2.addCommunication(1,2,4);
