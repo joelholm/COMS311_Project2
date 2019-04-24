@@ -133,6 +133,16 @@ public class CommunicationsMonitor {
 		//from c2 with a timestamp <= y
 		//Start with cn and run BFS on that
 		
+		//reset everything
+		Iterator<Integer> it = graph.keySet().iterator();
+		while( it.hasNext() ) {
+			List<ComputerNode> next = graph.get(it.next());
+			for(int i = 0; i < next.size(); i++) {
+				next.get(i).color = 0;
+				next.get(i).pred = null;
+			}
+		}
+		
 		//List for current layer nodes and list of nodes visited
 		Queue<ComputerNode> currQ = new LinkedList<>();
 		//ArrayList<ComputerNode> visited = new ArrayList<>();
