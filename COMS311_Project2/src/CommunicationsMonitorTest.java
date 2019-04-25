@@ -90,6 +90,11 @@ class CommunicationsMonitorTest {
 		assertEquals(4,  comMon2.graph.get(4).get(0).getTimestamp());
 		assertEquals(10, comMon2.graph.get(4).get(1).getTimestamp());
 		
+		//test a empty triples createGraph
+		CommunicationsMonitor comMon3 = new CommunicationsMonitor();
+		comMon.createGraph();
+		List<ComputerNode> list4 = comMon3.queryInfection(0, 2, 4, 6);
+		assertEquals( true, list4 == null);
 	}
 	
 	@Test
@@ -139,14 +144,9 @@ class CommunicationsMonitorTest {
 		
 		list1 = comMon.queryInfection(4, 2, 0, 12);
 		assertEquals(true, list1 != null);
-		
-		System.out.println("Size: " + list1.size());
-		Iterator<ComputerNode> it = list1.iterator();
-		ComputerNode curr;
-		while( it.hasNext() ) {
-			curr = it.next();
-			System.out.println(curr.toString());
-		}
+
+		list1 = comMon.queryInfection(88, 2, 0, 12);
+		assertEquals(true, list1 == null);
 		
 		
 		CommunicationsMonitor comMon2 = new CommunicationsMonitor();
@@ -166,10 +166,10 @@ class CommunicationsMonitorTest {
 		assertEquals(true, list4 == null);
 		
 		
-		if(list2 != null)
+		/* if(list2 != null)
 			for(int i = 0; i < list2.size(); i++) 
 				System.out.print("ID: " + list2.get(i).getID() + "   Time: " + list2.get(i).getTimestamp() + "\n");
-		System.out.print("\n");
+		System.out.print("\n"); */
 		
 	/*	List<ComputerNode> list3 = comMon2.queryInfection(1, 3, 1, 15);
 		if(list3 != null)

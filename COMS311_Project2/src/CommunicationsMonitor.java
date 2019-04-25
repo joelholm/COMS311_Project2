@@ -1,3 +1,15 @@
+/**
+ * CommunicationsMonitor  
+ * This class represents a network of computers and the timestamps of interations.  
+ * Interactions are added in triples (c1,c2,time) with addCommunication.  Once all
+ * communications are added, createGraph can be called. Once called, create graph
+ * cannot be called again along with addCommunication (nothing will happen).  After
+ * createGraph is called any number of queryInfection calls can be made as well as
+ * calls to both getComputerMapping functions.
+ * 
+ * @author Joel Holm, Colin Ishman
+ */
+
 import java.util.*;
 
 public class CommunicationsMonitor {
@@ -49,26 +61,21 @@ public class CommunicationsMonitor {
 			curr = ait.next();
 			ComputerNode ci = new ComputerNode(curr.getC1(),curr.getTimestamp());
 			ComputerNode cj = new ComputerNode(curr.getC2(),curr.getTimestamp());
-			
 			//add ci and cj to the graph if not already added, O(1)
 			ci = addNodeToGraph(ci);
 			cj = addNodeToGraph(cj);
-			
 			//connect ci and cj
 			ci.addNeighborNode(cj);
 			cj.addNeighborNode(ci);
-			
 		}//end of while, total time complexity of this while is O(m)
 		
 	}
 	
-	//returns a new node if the node already exists, otherwise
-	//it returns the same node you gave it
-	//adds an entry to the hash table if needed
-	//runs in constant time, O(1)
 	/**
-	 * returns a new node if the node already exists, otherwise
-	 * adds an entry to the hash table if needed
+	 * This is a helper function for createGraph. It takes care of any node additions to the hash map.
+	 * If the parameter node exists already it is returned. Otherwise, if the parameter node will be
+	 * added to the hash map.  A edge will be added from a node with the same ID as cn to cn if it 
+	 * exists.  This will run in O(1).
 	 * @param cn node to be added to graph
 	 * @return cn, the node that was given
 	 */
